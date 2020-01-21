@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://gram:gram@cinenet-bpfre.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://gram:gram@cinenet-bpfre.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
 }
