@@ -1,6 +1,7 @@
 const express = require('./node_modules/express');
 const router = express.Router();
-const { check, validationResult} = require('./node_modules/express-validator')
+const {check, validationResult} = require('express-validator');
+
 
 // @route   POST api/users
 // @desc    Test route
