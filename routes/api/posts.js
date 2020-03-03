@@ -133,7 +133,6 @@ router.put('/like/:id', auth, async(req, res) => {
     await post.save();
 
     res.json(post.likes);
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -151,8 +150,6 @@ router.post('/comment/:id', [auth, [check('text', 'Text is r equired').not().isE
   }
 
   try {
-
-  } catch (err) {
     const user = await User.findById(req.user.id).select('-password');
     const post = await Post.findById(req.params.id);
 
@@ -168,6 +165,38 @@ router.post('/comment/:id', [auth, [check('text', 'Text is r equired').not().isE
     await post.save();
 
     res.json(post.comments);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server Error');
+  }
+})
+
+// @route   DELETE api/posts/comment/:id/comment_id
+// @desc    Delete comment
+// @access  Private
+
+router.delete('/comment/:id/comment_id', auth, async(req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const comment = post.comment.find(comment => comment.id === req.params.comment_id);
+
+    if(!comment) {
+      return res.status(404).json({msg: 'Comment does not exist'});
+    }
+
+    if(comment.user.toString() !== req.user.id) {
+      return res.status(401).json({msg: 'User not authorized'});
+    }
+
+    const removeIndex = post.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
+    post.comments.splice(removeIndex, 1);
+
+    await post.save();
+
+    res.json(post.comments);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server Error');
   }
 })
 
