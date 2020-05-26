@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link } from 'react-router-dom'
 
-export const Landing = () => {
+const Landing = () => {
   return (
     <div>
       <section className="landing">
@@ -21,3 +21,5 @@ export const Landing = () => {
     </div>
   )
 }
+
+export default Landing;
